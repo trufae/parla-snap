@@ -1,0 +1,51 @@
+name: parla
+adopt-info: parla
+base: core24
+confinement: strict
+grade: stable
+compression: lzo
+platforms:
+  amd64:
+    build-on: [amd64]
+    build-for: amd64
+  arm64:
+    build-on: [arm64]
+    build-for: arm64
+apps:
+  parla:
+    extensions: [gnome]
+    command: usr/bin/parla
+    desktop: usr/share/applications/io.github.trufae.Parla.desktop
+    common-id: io.github.trufae.Parla
+    plugs:
+      - network
+      - network-status
+slots:
+  gnome-text-editor:
+    interface: dbus
+    bus: session
+    name: io.github.trufae.Parla
+parts:
+  parla:
+    source: https://github.com/trufae/parla.git
+    source-tag: "0.4.0"
+    source-type: git
+    plugin: meson
+    meson-parameters:
+      - --prefix=/usr
+    parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
+  deltachat-rpc-server:
+    plugin: nil
+    build-environment:
+      - DELTACHAT_VERSION: "2.51.0"
+    override-pull: |
+      case "${CRAFT_ARCH_BUILD_FOR}" in
+        amd64) ARCH=x86_64  ;;
+        arm64) ARCH=aarch64 ;;
+        armhf) ARCH=armv7l  ;;
+        i386)  ARCH=i686    ;;
+      esac
+      curl --fail --output deltachat-rpc-server --location \
+        "https://github.com/chatmail/core/releases/download/v${DELTACHAT_VERSION}/deltachat-rpc-server-${ARCH}-linux"
+    override-build: |
+      install -Dm755 deltachat-rpc-server "${CRAFT_PART_INSTALL}/usr/bin/deltachat-rpc-server"

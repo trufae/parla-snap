@@ -1,0 +1,65 @@
+name: Check for updates
+on:
+  schedule: # for scheduling to work this file must be in the default branch
+  - cron: "30 */6 * * *" # run every 6 hours
+  workflow_dispatch: # can be manually dispatched under GitHub's "Actions" tab 
+
+jobs:
+  update-versions:
+    runs-on: ubuntu-latest
+
+    permissions:
+      # Give the default GITHUB_TOKEN write permission to commit and push the
+      # added or changed files to the repository.
+      contents: write
+
+    steps:
+      # Install version checker dependencies
+      - name: Install required dependencies
+        run: |
+          curl -Ls https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64.tar.gz | tar -xzC /tmp
+          sudo cp -v /tmp/yq_linux_* /usr/local/bin/yq
+
+      # Perform the checkout of the main branch
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      # Perform the actual version check
+      - name: Check for new versions for all parts
+        run: .github/scripts/update-versions.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # Commit changed file back to the repository
+      - name: Commit changes
+        id: commit
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
+        with:
+          commit_message: Automatic update versions
+          #commit_user_name: 'github-actions[bot]'
+          #commit_user_email: '41898282+github-actions[bot]@users.noreply.github.com'
+          commit_author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+
+      # Try to autopromote old builds
+      - name: Install snapcraft
+        if: steps.commit.outputs.changes_detected == 'false'
+        run: sudo snap install snapcraft --channel=8.x/stable --classic
+
+      # Check latest snap revision at edge channel for the slowest building channel (arm64)
+      - name: Check latest snapcraft build revision
+        if: steps.commit.outputs.changes_detected == 'false'
+        id: snap
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+        run: snapcraft list-revisions parla --arch arm64 | awk 'NR==2{print "channels="$5}' >> $GITHUB_OUTPUT
+
+      # Automatically promote to stable only if not already and no new build has been started
+      - name: Promote Snap to stable if not yet promoted
+        if: steps.commit.outputs.changes_detected == 'false' && steps.snap.outputs.channels == 'latest/edge*'
+        env:
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_STORE_CREDENTIALS }}
+          # Workaround for https://github.com/snapcore/snapcraft/issues/4439
+          SNAPCRAFT_HAS_TTY: "true"
+        run: yes | snapcraft promote parla --from-channel edge --to-channel stable
