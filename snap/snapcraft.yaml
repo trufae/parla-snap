@@ -21,7 +21,7 @@ apps:
       - network
       - network-status
 slots:
-  gnome-text-editor:
+  parla:
     interface: dbus
     bus: session
     name: io.github.trufae.Parla
