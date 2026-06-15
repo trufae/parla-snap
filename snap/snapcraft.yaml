@@ -37,7 +37,7 @@ parts:
   deltachat-rpc-server:
     plugin: nil
     build-environment:
-      - DELTACHAT_VERSION: "2.52.0"
+      - DELTACHAT_VERSION: "2.53.0"
     override-pull: |
       case "${CRAFT_ARCH_BUILD_FOR}" in
         amd64) ARCH=x86_64  ;;
