@@ -11,12 +11,6 @@ platforms:
   arm64:
     build-on: [arm64]
     build-for: arm64
-  riscv64:
-    build-on: [riscv64]
-    build-for: riscv64
-  ppc64el:
-    build-on: [ppc64el]
-    build-for: ppc64el
 apps:
   parla:
     extensions: [gnome]
@@ -42,9 +36,11 @@ parts:
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
   deltachat-rpc-server:
     plugin: nil
+    build-packages:
+      - curl
     build-environment:
       - DELTACHAT_VERSION: "2.53.0"
-    override-pull: |
+    override-build: |
       case "${CRAFT_ARCH_BUILD_FOR}" in
         amd64) ARCH=x86_64  ;;
         arm64) ARCH=aarch64 ;;
@@ -53,5 +49,4 @@ parts:
       esac
       curl --fail --output deltachat-rpc-server --location \
         "https://github.com/chatmail/core/releases/download/v${DELTACHAT_VERSION}/deltachat-rpc-server-${ARCH}-linux"
-    override-build: |
       install -Dm755 deltachat-rpc-server "${CRAFT_PART_INSTALL}/usr/bin/deltachat-rpc-server"
