@@ -28,7 +28,7 @@ slots:
 parts:
   parla:
     source: https://github.com/trufae/parla.git
-    source-tag: "0.6.8"
+    source-tag: "0.7.0"
     source-type: git
     plugin: meson
     meson-parameters:
