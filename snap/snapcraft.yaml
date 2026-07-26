@@ -1,6 +1,6 @@
 name: parla
 adopt-info: parla
-base: core24
+base: core26
 confinement: strict
 grade: stable
 compression: lzo
@@ -37,6 +37,8 @@ parts:
       - --prefix=/usr
       - -Dwebxdc=false
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
+    stage-packages:
+      - whisper.cpp
   deltachat-rpc-server:
     plugin: nil
     build-packages:
