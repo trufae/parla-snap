@@ -42,6 +42,7 @@ parts:
     stage-packages:
       - libzip5
       - libwebkitgtk-6.0-4
+      - whisper.cpp
   deltachat-rpc-server:
     plugin: nil
     build-packages:
