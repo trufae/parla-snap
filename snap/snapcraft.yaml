@@ -33,6 +33,7 @@ parts:
     plugin: meson
     meson-parameters:
       - --prefix=/usr
+      - -Dwebxdc=false
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
   deltachat-rpc-server:
     plugin: nil
