@@ -1,6 +1,6 @@
 name: parla
 adopt-info: parla
-base: core24
+base: core26
 confinement: strict
 grade: stable
 compression: lzo
@@ -20,6 +20,8 @@ apps:
     plugs:
       - network
       - network-status
+      - audio-playback
+      - audio-record
 slots:
   parla:
     interface: dbus
@@ -34,6 +36,10 @@ parts:
     meson-parameters:
       - --prefix=/usr
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
+    build-packages:
+      - libwhisper-dev
+    stage-packages:
+      - whisper.cpp
   deltachat-rpc-server:
     plugin: nil
     build-packages:
