@@ -34,6 +34,10 @@ parts:
     meson-parameters:
       - --prefix=/usr
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
+    build-packages:
+      - libwebkitgtk-6.0-dev
+    stage-packages:
+      - libwebkitgtk-6.0-4
   deltachat-rpc-server:
     plugin: nil
     build-packages:
