@@ -20,6 +20,8 @@ apps:
     plugs:
       - network
       - network-status
+      - audio-playback
+      - audio-record
 slots:
   parla:
     interface: dbus
