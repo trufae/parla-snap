@@ -37,6 +37,10 @@ parts:
       - --prefix=/usr
       - -Dwebxdc=false
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
+    build-packages:
+      - libzip-dev
+    stage-packages:
+      - libzip4t64
   deltachat-rpc-server:
     plugin: nil
     build-packages:
