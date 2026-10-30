@@ -1,6 +1,6 @@
 name: parla
 adopt-info: parla
-base: core24
+base: core26
 confinement: strict
 grade: stable
 compression: lzo
@@ -40,7 +40,7 @@ parts:
     build-packages:
       - libzip-dev
     stage-packages:
-      - libzip4t64
+      - libzip5
   deltachat-rpc-server:
     plugin: nil
     build-packages:
