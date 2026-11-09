@@ -37,11 +37,11 @@ parts:
       - --prefix=/usr
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
     build-packages:
-      - libzip-dev
       - libwebkitgtk-6.0-dev
     stage-packages:
-      - libzip5
       - libwebkitgtk-6.0-4
+      - unzip
+      - zip
   deltachat-rpc-server:
     plugin: nil
     build-packages:
