@@ -41,6 +41,7 @@ parts:
     stage-packages:
       - libwebkitgtk-6.0-4
       - unzip
+      - webp-pixbuf-loader
       - zip
   deltachat-rpc-server:
     plugin: nil
