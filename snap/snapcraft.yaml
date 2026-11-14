@@ -35,6 +35,7 @@ parts:
     plugin: meson
     meson-parameters:
       - --prefix=/usr
+      - -Dupdate_checks=false
     parse-info: [usr/share/metainfo/io.github.trufae.Parla.metainfo.xml]
     build-packages:
       - libwebkitgtk-6.0-dev
