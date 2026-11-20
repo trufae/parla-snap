@@ -12,7 +12,18 @@ To install the snap version of parla run:
 sudo snap install parla
 ```
 
-To use the snap version of `parla-cli` use instead:
+## CLI
+
+To use the snap version of `parla-cli` use instead `parla.parla-cli`.
+
 ```sh
-parla.cli
+alias parla-cli='parla.parla-cli'
+```
+
+Or create a wrapper script if intended to be used via AI by running:
+```sh
+cat << EOF | sudo tee /usr/local/bin/parla-cli
+#!/bin/sh
+exec parla.parla-cli "\$@"
+EOF
 ```
