@@ -23,11 +23,13 @@ apps:
       - audio-playback
       - audio-record
   parla-cli:
+    extensions: [gnome]
     command: usr/bin/parla-cli
     plugs:
       - network
       - network-status
   cli:
+    extensions: [gnome]
     command: usr/bin/parla-cli
     plugs:
       - network
