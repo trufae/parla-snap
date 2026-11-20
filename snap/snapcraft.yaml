@@ -22,6 +22,16 @@ apps:
       - network-status
       - audio-playback
       - audio-record
+  parla-cli:
+    command: usr/bin/parla-cli
+    plugs:
+      - network
+      - network-status
+  cli:
+    command: usr/bin/parla-cli
+    plugs:
+      - network
+      - network-status
 slots:
   parla:
     interface: dbus

@@ -11,3 +11,8 @@ To install the snap version of parla run:
 ```sh
 sudo snap install parla
 ```
+
+To use the snap version of `parla-cli` use instead:
+```sh
+parla.cli
+```
