@@ -26,4 +26,5 @@ cat << EOF | sudo tee /usr/local/bin/parla-cli
 #!/bin/sh
 exec parla.parla-cli "\$@"
 EOF
+sudo chmod a+rx /usr/local/bin/parla-cli
 ```
